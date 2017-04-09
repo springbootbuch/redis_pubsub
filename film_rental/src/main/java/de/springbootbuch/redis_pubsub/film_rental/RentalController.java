@@ -65,7 +65,7 @@ public class RentalController {
 	public void returnFilm(@RequestBody ReturnedFilm returnedFilm) {
 		final FilmInStore filmInStore = 
 			this.inventoryRepository.save(new FilmInStore(returnedFilm.getTitle()));
-		System.out.println(returnedFilm.getTitle());
+
 		redisTemplate.convertAndSend(
 			"returned-films-events", 
 			new FilmReturnedEvent((filmInStore.getId()), filmInStore.getTitle()));
