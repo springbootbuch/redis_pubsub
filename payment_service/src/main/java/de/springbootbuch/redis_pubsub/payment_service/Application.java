@@ -39,9 +39,11 @@ public class Application {
 		FilmReturnedEventReceiver eventReceiver
 	) {
 		final MessageListenerAdapter adapter
-			= new MessageListenerAdapter(eventReceiver, "filmReturned");
+			= new MessageListenerAdapter(
+				eventReceiver, "filmReturned");
 		adapter.setSerializer(
-			new Jackson2JsonRedisSerializer<>(FilmReturnedEvent.class));
+			new Jackson2JsonRedisSerializer<>(
+				FilmReturnedEvent.class));
 		return adapter;
 	}
 

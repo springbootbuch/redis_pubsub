@@ -23,16 +23,17 @@ public class FilmReturnedEventReceiver {
 
 		private final String title;
 
-		public FilmReturnedEvent(@JsonProperty("title") String title) {
+		public FilmReturnedEvent(
+			@JsonProperty("title") String title
+		) {
 			this.title = title;
-		}
-
-		public String getTitle() {
-			return title;
 		}
 	}
 
 	public void filmReturned(FilmReturnedEvent event) {
-		LOG.info("Film '{}' returned, billing customer...", event.getTitle());
+		LOG.info(
+			"Film '{}' returned, billing customer...", 
+			event.title
+		);
 	}
 }
