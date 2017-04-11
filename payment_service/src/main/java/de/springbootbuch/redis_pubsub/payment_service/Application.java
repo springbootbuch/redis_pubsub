@@ -1,6 +1,6 @@
-package de.springbootbuch.redis_pubsub.film_rental.payment_service;
+package de.springbootbuch.redis_pubsub.payment_service;
 
-import de.springbootbuch.redis_pubsub.film_rental.payment_service.FilmReturnedEventReceiver.FilmReturnedEvent;
+import de.springbootbuch.redis_pubsub.payment_service.FilmReturnedEventReceiver.FilmReturnedEvent;
 import java.util.concurrent.CountDownLatch;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,11 +50,13 @@ public class Application {
 		MessageListenerAdapter eventReceiverAdapter,
 		RedisConnectionFactory connectionFactory
 	) {
-
 		RedisMessageListenerContainer container
 			= new RedisMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
-		container.addMessageListener(eventReceiverAdapter, new PatternTopic("returned-films-events"));
+		container.addMessageListener(
+			eventReceiverAdapter, 
+			new PatternTopic("returned-films-events")
+		);
 		return container;
 	}
 }

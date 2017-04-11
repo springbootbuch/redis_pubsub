@@ -1,4 +1,4 @@
-package de.springbootbuch.redis_pubsub.film_rental.payment_service;
+package de.springbootbuch.redis_pubsub.payment_service;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
