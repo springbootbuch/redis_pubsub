@@ -23,7 +23,6 @@ cd payment_service
 You then can post to the rental service like
 
 ```
-## Request
 curl -X "POST" "http://localhost:8080/returnedFilms" \
      -H "Content-Type: application/json; charset=utf-8" \
      -d $'{
