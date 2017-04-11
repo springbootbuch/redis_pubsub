@@ -17,7 +17,7 @@ public class Application {
 
 	@Bean
 	public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
-		final RedisTemplate redisTemplate = new RedisTemplate();
+		final RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(connectionFactory);
 		redisTemplate.setDefaultSerializer(
 			new Jackson2JsonRedisSerializer<>(FilmReturnedEvent.class));
