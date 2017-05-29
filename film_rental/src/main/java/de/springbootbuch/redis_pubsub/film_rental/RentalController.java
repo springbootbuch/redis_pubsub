@@ -40,7 +40,8 @@ public class RentalController {
 	@PostMapping("/returnedFilms")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void returnFilm(
-		@RequestBody ReturnedFilm returnedFilm) {
+		@RequestBody ReturnedFilm returnedFilm
+	) {
 		final FilmInStore filmInStore = 
 			this.inventoryRepository
 				.save(new FilmInStore(returnedFilm.getTitle()));
