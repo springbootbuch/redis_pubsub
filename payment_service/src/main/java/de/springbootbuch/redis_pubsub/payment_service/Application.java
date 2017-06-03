@@ -1,9 +1,10 @@
 package de.springbootbuch.redis_pubsub.payment_service;
 
-import de.springbootbuch.redis_pubsub.payment_service.FilmReturnedEventReceiver.FilmReturnedEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.concurrent.CountDownLatch;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.jackson.JsonComponentModule;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -33,17 +34,32 @@ public class Application {
 		});
 		closeLatch.await();
 	}
+	
+	@Bean
+	FilmReturnedEventReceiver filmReturnedEventReceiver() {
+		return new FilmReturnedEventReceiver();
+	}
 
 	@Bean
+	ObjectMapper objectMapper(final JsonComponentModule jsonComponentModule) {
+		final ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(jsonComponentModule);
+		return objectMapper;
+	}
+	
+	@Bean
 	MessageListenerAdapter eventReceiverAdapter(
-		FilmReturnedEventReceiver eventReceiver
+		FilmReturnedEventReceiver eventReceiver,
+		ObjectMapper objectMapper
 	) {
 		final MessageListenerAdapter adapter
 			= new MessageListenerAdapter(
 				eventReceiver, "filmReturned");
-		adapter.setSerializer(
-			new Jackson2JsonRedisSerializer<>(
-				FilmReturnedEvent.class));
+		final Jackson2JsonRedisSerializer<FilmReturnedEvent> 
+			serializer = new Jackson2JsonRedisSerializer<>(
+				FilmReturnedEvent.class);
+		serializer.setObjectMapper(objectMapper);
+		adapter.setSerializer(serializer);
 		return adapter;
 	}
 
